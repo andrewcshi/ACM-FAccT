@@ -113,5 +113,5 @@ def find_papers(file, keywords):
   return papers_links
 
 ### TESTING ###
-# result = find_papers('facctpapers.html', fairness_keywords)
-# print(result)
+result = find_papers('facctpapers.html', fairness_keywords)
+print(result)

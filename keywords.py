@@ -38,9 +38,10 @@ def get_keywords(response, url):
 
             ccs_keyword = page_soup.find('div', class_='CCSconcepts')
             ccs_list = []
-            strong_tags = ccs_keyword.find_all('strong')
-            for tag in strong_tags:
-                ccs_list.append(tag.text)
+            # Check if ccs_keyword is not None before attempting to find all 'strong' tags
+            if ccs_keyword:
+                strong_tags = ccs_keyword.find_all('strong')
+                ccs_list = [tag.text for tag in strong_tags]
 
             return keyword_list, ccs_list
         else:
