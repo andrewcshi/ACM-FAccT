@@ -126,11 +126,6 @@ def main():
                 'affiliated_countries': [data['country'] for data in authors.values()]
             }
 
-            # For development purposes
-            print(paper_data)
-            print()
-            print()
-
             result.append(paper_data)
 
             time.sleep(10)
