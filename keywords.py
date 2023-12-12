@@ -35,14 +35,21 @@ def get_keywords(response, url):
             keyword_list = []
             for keyword in keywords:
                 keyword_list.append(keyword.find('small').text)
-            return keyword_list
+
+            ccs_keyword = page_soup.find('div', class_='CCSconcepts')
+            ccs_list = []
+            strong_tags = ccs_keyword.find_all('strong')
+            for tag in strong_tags:
+                ccs_list.append(tag.text)
+
+            return keyword_list, ccs_list
         else:
             print(f"Failed to fetch {url}, status code: {page_response.status_code}")
 
     except requests.RequestException as e:
         print(f"Error fetching {url}: {e}")
 
-    return None
+    return None, None
 
 ### TESTING ###
 # url = 'https://doi.org/10.1145/3593013.3594084'

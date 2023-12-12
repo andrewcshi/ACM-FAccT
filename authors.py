@@ -29,15 +29,31 @@ def get_authors(response, url):
             author_tags = page_soup.find_all('span', class_='loa__author-info')
 
             # Initialize a dictionary for the current paper's authors and affiliations
-            paper_authors_affiliations = {}
+            authors_affiliations = {}
+            authors_affiliations_countries = {}
 
             # Extract the text of each author and their affiliation
             for author in author_tags:
                 author_name = author.find('span', class_='loa__author-name').text
                 author_affiliation = author.find('span', class_='loa_author_inst').text.strip()
-                paper_authors_affiliations[author_name] = author_affiliation
+                authors_affiliations[author_name] = author_affiliation
+            
+            for author, affiliation in authors_affiliations.items():
+                if ',' in affiliation:
+                    # Split the string based on the last comma
+                    split_affiliation = affiliation.rsplit(', ', 1)
+                    authors_affiliations_countries[author] = {
+                        'affiliation': split_affiliation[0].strip(),
+                        'country': split_affiliation[1].strip()
+                    }
+                else:
+                    # Handle cases where there is no comma
+                    authors_affiliations_countries[author] = {
+                        'affiliation': affiliation,
+                        'country': None
+                    }
 
-            return paper_authors_affiliations
+            return authors_affiliations_countries
         else:
             print(f"Failed to fetch {url}, status code: {page_response.status_code}")
         

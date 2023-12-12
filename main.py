@@ -116,11 +116,20 @@ def main():
 
             # Store the information in a dictionary data structure
             paper_data = {
-                'title': paper,
+                'doi_link': paper,
+                'title': paper_category[paper],
                 'abstract': abstract,
-                'keywords': keywords,
-                'authors': authors,
+                'keywords': keywords[0],
+                'CCS concepts': keywords[1],
+                'author_names': list(authors.keys()),
+                'affiliations': [data['affiliation'] for data in authors.values()],
+                'affiliated_countries': [data['country'] for data in authors.values()]
             }
+
+            # For development purposes
+            print(paper_data)
+            print()
+            print()
 
             result.append(paper_data)
 
