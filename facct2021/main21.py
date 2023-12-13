@@ -1,13 +1,13 @@
-from papers import find_papers
-from abstracts import get_abstracts
-from keywords import get_keywords
-from authors import get_authors
+from papers21 import find_papers
+from abstracts21 import get_abstracts
+from keywords21 import get_keywords
+from authors21 import get_authors
 import time
 import requests
 import csv
 
 def main():
-    base_url = 'https://facctconference.org/2022/acceptedpapers'
+    base_url = 'https://facctconference.org/2021/acceptedpapers'
     result = []
 
     # Define keyword lists
@@ -94,10 +94,10 @@ def main():
     security_keywords = [keyword.lower() for keyword in security_keywords]
 
     # Find papers in each category
-    papers_transparency = find_papers(transparency_keywords)
-    papers_fairness = find_papers(fairness_keywords)
-    papers_privacy = find_papers(privacy_keywords)
-    papers_security = find_papers(security_keywords)
+    papers_transparency = find_papers('faccthtml/facctpapers21.html', transparency_keywords)
+    papers_fairness = find_papers('faccthtml/facctpapers21.html', fairness_keywords)
+    papers_privacy = find_papers('faccthtml/facctpapers21.html', privacy_keywords)
+    papers_security = find_papers('faccthtml/facctpapers21.html', security_keywords)
 
     # Process each paper
     for paper_category in [papers_transparency, papers_fairness, papers_privacy, papers_security]:
@@ -129,7 +129,7 @@ def main():
             print(paper_data)
             print()
             print()
-
+            
             result.append(paper_data)
 
             time.sleep(10)

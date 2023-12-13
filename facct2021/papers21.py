@@ -102,7 +102,8 @@ def find_papers(file, keywords):
   with open(file, 'r') as facct_file:
     content = facct_file.read()
     soup = BeautifulSoup(content, 'lxml')
-    papers = soup.find_all('a')
+    div_tag = soup.find('div', class_='col-lg-12')
+    papers = div_tag.find_all('a')
     for paper in papers:
       paper_lower = paper.text.lower()
       for keyword in keywords:
@@ -113,5 +114,5 @@ def find_papers(file, keywords):
   return papers_links
 
 ### TESTING ###
-# result = find_papers('faccthtml/facctpapers.html', fairness_keywords)
+# result = find_papers('faccthtml/facctpapers21.html', security_keywords)
 # print(result)
