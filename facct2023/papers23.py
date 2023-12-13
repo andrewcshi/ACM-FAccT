@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from papersdict import dict
 
 # Define keywords for each category as provided
 transparency_keywords = [
@@ -84,7 +83,7 @@ fairness_keywords = [keyword.lower() for keyword in fairness_keywords]
 privacy_keywords = [keyword.lower() for keyword in privacy_keywords]
 security_keywords = [keyword.lower() for keyword in security_keywords]
 
-def find_papers(keywords):
+def find_papers(file, keywords):
   """
   Searches an HTML file for academic papers that contain specific keywords in different categories.
   This function parses the file and extracts the link and title of the paper in key-value pairs.
@@ -96,14 +95,23 @@ def find_papers(keywords):
   Returns:
   papers_links = A dictionary where each key is the DOI link and the value is the title of the paper.
   """
-  result = {}
-  for keyword in keywords:
-    for link, title in dict.items():
-      if keyword in title.lower():
-        result[link] = title
-  return result
 
+  # Dictionary to store link-paper key-value pairs
+  papers_links = {}
+
+  with open(file, 'r') as facct_file:
+    content = facct_file.read()
+    soup = BeautifulSoup(content, 'lxml')
+    papers = soup.find_all('a')
+    for paper in papers:
+      paper_lower = paper.text.lower()
+      for keyword in keywords:
+          if keyword in paper_lower: # Check if keyword match exists
+            doi_link = paper['href']
+            papers_links[doi_link] = paper.text # Store link and title in dictionary
+    
+  return papers_links
 
 ### TESTING ###
-result = find_papers(privacy_keywords)
-print(result)
+# result = find_papers(fairness_keywords)
+# print(result)
