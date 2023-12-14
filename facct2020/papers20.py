@@ -114,5 +114,6 @@ def find_papers(file, keywords):
   return papers_links
 
 ### TESTING ###
-# result = find_papers('faccthtml/facctpapers20.html', security_keywords)
-# print(result)
+result = find_papers('faccthtml/facctpapers20.html', security_keywords)
+print(result)
+print(len(result))

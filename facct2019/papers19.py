@@ -110,7 +110,7 @@ def find_papers(file, keywords):
           if keyword in paper_lower: # Check if keyword match exists
             doi_link = paper['href']
             papers_links[doi_link] = paper.text # Store link and title in dictionary
-    
+      
   return papers_links
 
 ### TESTING ###
